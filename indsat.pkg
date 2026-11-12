@@ -1,0 +1,48 @@
+v 3
+d indsat: Indicator saturation for outliers and structural breaks (IIS SIS TIS MIS)
+d
+d  indsat is a library of indicator-saturation tools under one command. It detects outliers,
+d  location shifts, trend breaks and coefficient breaks by general-to-specific selection over
+d  saturating sets of impulse, step, broken-trend (linear/quadratic/cubic), differenced and
+d  pairwise impulse, multiplicative, designed (volcanic, transitory change, ramp, user shape)
+d  and user-specified indicators, with super and ultra saturation and common break dates.
+d  The default search reproduces R gets::isat; split-half (Johansen-Nielsen; Nielsen-Qian) and
+d  m-step Huber-skip estimators are included. Subcommands: indsat ardl (ARDL/EC with saturation
+d  and PSS bounds test), loop, gauge, sim, and postestimation dates, path, plot, test, outlier,
+d  distort, biascorr, bias, forecast, diag. Typed after regress, newey or ardl, indsat saturates the model in memory.
+d  Journal-style tables and graphs.
+d
+d  KW: indicator saturation
+d  KW: outliers
+d  KW: structural breaks
+d  KW: general-to-specific
+d  KW: step indicator saturation
+d  KW: ARDL
+d
+d Requires: Stata version 14.0; ardl (SSC) for indsat ardl
+d Distribution-Date: 20261112
+d Author: Merwan Roudane
+d Support: email merwanroudane920@gmail.com
+d
+f indsat.ado
+f indsat_estat.ado
+f indsat_p.ado
+f indsat_cmp.ado
+f indsat_ardl.ado
+f indsat_loop.ado
+f indsat_gauge.ado
+f indsat_sim.ado
+f indsat.sthlp
+f indsat_types.sthlp
+f indsat_methods.sthlp
+f indsat_postestimation.sthlp
+f indsat_ardl.sthlp
+f indsat_loop.sthlp
+f indsat_gauge.sthlp
+f indsat_sim.sthlp
+f indsat_example.do
+f indsat_validate.do
+f indsat_validate.R
+f indsat_nile.dta
+f indsat_seatbelts.dta
+f indsat_dhsy.dta

@@ -1,0 +1,4 @@
+v 3
+d indsat -- Indicator saturation for outliers and structural breaks
+d Merwan Roudane (merwanroudane920@gmail.com)
+p indsat Indicator saturation library: IIS SIS TIS QIS CIS DIS PIS MIS BIS UIS, super/ultra, ARDL bounds
