@@ -67,6 +67,18 @@ net get indsat, from("https://raw.githubusercontent.com/merwanroudane/indsat/mai
 do indsat_guide.do
 ```
 
+## The same examples in R
+
+- `indsat_simple.R` + `indsat_data.xlsx`: a short beginner script with the R package `gets`
+  (four examples, comments in English and Arabic). All data are in the Excel file, with a README
+  sheet describing every variable. Put both files in one folder and run the script line by line.
+- `indsat_guide.R`: the full guide (ARDL bounds test, MIS, robustness, Excel tables and graphs).
+
+```r
+install.packages(c("gets", "readxl"))
+source("indsat_simple.R", echo = TRUE)
+```
+
 ## Interactive lecture (Streamlit)
 
 The folder [`lecture/`](lecture) contains a bilingual (Arabic / English terms) interactive lecture on
