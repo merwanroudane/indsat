@@ -3,8 +3,24 @@ import streamlit as st
 
 from lib import ui
 
-ui.header("مقارنة مع طرق كشف الكسور الأخرى", "Indicator saturation versus other break tests",
-          "متى يتفوق التشبع، ومتى تكون الطرق التقليدية كافية؟", "blue")
+ui.hero("المراجعة", "مقارنة مع طرق كشف الكسور الأخرى", "Indicator saturation versus other break tests",
+        "التشبع ليس الطريقة الوحيدة لكشف الكسور. المحكّم قد يسألك: لماذا لم تستخدم Bai-Perron؟ هذا الدرس يعطيك الجواب: "
+        "متى يتفوق التشبع، ومتى تكفي الطرق التقليدية، وكيف تجمع بينها.", "blue")
+ui.objectives([
+    "أشهر طرق كشف الكسور وما يفترضه كل منها",
+    "مزايا التشبع وحدوده بإنصاف",
+    "كيف تبرر اختيارك للمحكّم",
+], minutes=10)
+st.markdown("## 🗂️ الطرق الرئيسية")
+st.markdown(
+    """
+- **Chow (1960)**: يختبر كسرًا في تاريخ **تعرفه مسبقًا**. بسيط، لكن الباحث نادرًا ما يعرف التاريخ بدقة.
+- **CUSUM**: يرسم مجموع البواقي المتراكم ليكشف عدم الثبات عمومًا، دون تحديد دقيق للتاريخ.
+- **Andrews / Quandt**: يبحث عن **كسر واحد** في تاريخ مجهول بأخذ أكبر إحصاءة F.
+- **Bai-Perron**: يبحث عن **عدد محدود** من الكسور، ويشترط حدًا أدنى لطول كل نظام (التشذيب)، فلا يكتشف الكسور قرب الأطراف.
+- **Markov switching**: يفترض أن الاقتصاد يتناوب بين حالات (ركود/توسع) باحتمالات.
+"""
+)
 
 df = pd.DataFrame(
     [
@@ -24,8 +40,7 @@ st.dataframe(df, hide_index=True)
 
 c1, c2 = st.columns(2)
 with c1:
-    with st.container(border=True):
-        st.markdown("#### :green[مزايا التشبع]")
+    with ui.box("example", "مزايا التشبع"):
         st.markdown(
             """
 - لا يحتاج عدد الكسور ولا تواريخها ولا **تشذيب** الأطراف
@@ -36,8 +51,7 @@ with c1:
 """
         )
 with c2:
-    with st.container(border=True):
-        st.markdown("#### :orange[حدود التشبع]")
+    with ui.box("warn", "حدود التشبع"):
         st.markdown(
             """
 - الكسور الصغيرة جدًا قد تفوت (القوة تزداد مع حجم الكسر)
@@ -47,6 +61,14 @@ with c2:
 - النتائج تختلف قليلًا بين خوارزميات البحث (gets، Autometrics)
 """
         )
-ui.key_idea("الممارسة الجيدة: لا تعتمد على طريقة واحدة. قارن SIS مع Bai-Perron، وMIS مع Markov switching — "
-            "كما فعل Stillwagon (2025) في دراسة تحولات السياسة النقدية الأمريكية: الكسور «المتينة» تظهر في كل الطرق.")
+with ui.box("tip", "الممارسة الجيدة"):
+    st.markdown("لا تعتمد على طريقة واحدة. قارن SIS مع Bai-Perron، وMIS مع Markov switching، كما فعل Stillwagon (2025) "
+                "في دراسة تحولات السياسة النقدية الأمريكية: الكسور **المتينة** هي التي تظهر في كل الطرق.")
+with ui.box("summary", "جواب جاهز للمحكّم"):
+    st.markdown("> *Unlike Bai–Perron, indicator saturation requires neither the number of breaks nor trimming, "
+                "detects breaks close to the sample end, and handles outliers and shifts jointly with a controlled "
+                "gauge. As a robustness check, Bai–Perron tests identify break dates close to those found by SIS.*")
+    st.caption("لا تكتب الجملة الأخيرة إلا إذا تحققت منها فعلًا على بياناتك.")
+ui.check("أي طريقة لا تستطيع كشف كسر في آخر 5% من العينة بسبب التشذيب؟", ["SIS", "Bai-Perron", "IIS", "TIS"], 1,
+         "Bai-Perron يشترط حدًا أدنى لطول كل نظام، فلا يبحث قرب الأطراف.", "cmp_q1")
 ui.nav_hint("دليل اختيار النوع")

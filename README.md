@@ -55,6 +55,18 @@ indsat, sis tpval(0.01)                  // saturated ARDL + bounds test + long-
 | `indsat outlier / distort / biascorr / bias` | outlier tests, distortion test, bias correction, constancy test |
 | `indsat forecast / diag` | forecasting with persistent shifts, misspecification tests |
 
+## Complete guide with real data
+
+`indsat_guide.do` is a step-by-step guide for researchers (comments in English and Arabic) using real
+data only: the Nile flow, US life expectancy (built into Stata), UK road casualties and the DHSY
+consumption function. It covers every main command, saves 12 graphs and an Excel table of breaks, and
+runs in about 3-4 minutes:
+
+```stata
+net get indsat, from("https://raw.githubusercontent.com/merwanroudane/indsat/main/")
+do indsat_guide.do
+```
+
 ## Interactive lecture (Streamlit)
 
 The folder [`lecture/`](lecture) contains a bilingual (Arabic / English terms) interactive lecture on

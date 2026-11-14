@@ -327,7 +327,7 @@ uses a cumulative-block approximation that, after a retained impulse, also adds 
 {phang2}{cmd:. indsat flow, iis algorithm(split) tpval(0.01)}{p_end}
 {phang2}{cmd:. indsat flow, iis algorithm(mstep) msteps(5) tpval(0.01)}{p_end}
 
-{pstd}A full worked script is installed with the package: {cmd:net get indsat} then {cmd:do indsat_example.do}.{p_end}
+{pstd}Two worked scripts come with the package ({cmd:net get indsat}): {cmd:do indsat_guide.do} is a complete guide for researchers with real data (Nile, US life expectancy, UK road casualties, DHSY), graphs and Excel tables; {cmd:do indsat_example.do} covers every option on simulated and real data.{p_end}
 
 
 {marker results}{...}

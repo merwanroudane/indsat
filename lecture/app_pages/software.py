@@ -3,8 +3,22 @@ import streamlit as st
 
 from lib import ui
 
-ui.header("البرمجيات والأوامر", "Software: Stata, R and OxMetrics",
-          "ثلاث بيئات رئيسية لتطبيق التشبع، وكيف تقابل أوامرها بعضها", "gray")
+ui.hero("الأدوات", "البرمجيات والأوامر", "Software: Stata, R and OxMetrics",
+        "ثلاث بيئات رئيسية لتطبيق التشبع. هنا تجد كيف تثبّت كل أداة، وجدولًا يقابل الأوامر ببعضها، "
+        "وأمثلة جاهزة للنسخ تبدأ بها مباشرة.", "gray")
+c1, c2, c3 = st.columns(3)
+with c1:
+    with ui.box("def", "Stata: مكتبة indsat"):
+        st.markdown("أمر مركزي واحد `indsat` تحته كل الأنواع (بما فيها أنواع OxMetrics غير الموجودة في R) والاختبارات والرسوم، "
+                    "ويعمل **بعد** regress وnewey وardl مباشرة.")
+with c2:
+    with ui.box("def", "R: حزمة gets"):
+        st.markdown("مجانية ومفتوحة المصدر (Pretis, Reade & Sucarrat 2018). الدالة `isat()` تغطي IIS وSIS وTIS وUIS، "
+                    "مع اختبارات القيم الشاذة ومسار المعامل.")
+with c3:
+    with ui.box("def", "OxMetrics: Autometrics"):
+        st.markdown("البرنامج التجاري الأصلي (Doornik). خوارزمية بحث شجري مع اختبارات تشخيصية؛ وحزمة OxRegimes لـ MIS والأنظمة.")
+st.markdown("## 🔄 جدول مقابلة الأوامر")
 
 df = pd.DataFrame(
     [
@@ -26,6 +40,7 @@ df = pd.DataFrame(
 )
 st.dataframe(df, hide_index=True)
 
+st.markdown("## 💻 أمثلة جاهزة للنسخ")
 t1, t2, t3 = st.tabs(["Stata (indsat)", "R (gets)", "OxMetrics (Ox)"])
 with t1:
     st.code(
@@ -66,6 +81,11 @@ decl res = r.Saturation("SIS+MIS+IIS", 0.01, {{"vars", {"x"}}});
 res.Print();""", language="cpp")
 st.link_button("مستودع مكتبة indsat على GitHub", "https://github.com/merwanroudane/indsat",
                icon=":material/code:", type="primary")
-ui.key_idea("النتائج متطابقة رقميًا بين indsat (الإعداد الافتراضي) وgets::isat في R. أما Autometrics فخوارزمية "
-            "مختلفة (بحث شجري مع اختبارات تشخيصية)، فقد تختلف النتائج في الحالات الحدّية.")
+with ui.box("tip", "هل تتطابق النتائج بين البرامج؟"):
+    st.markdown("النتائج متطابقة رقميًا بين indsat (الإعداد الافتراضي) وgets::isat في R. أما Autometrics فخوارزمية "
+                "مختلفة (بحث شجري مع اختبارات تشخيصية)، فقد تختلف النتائج في الحالات الحدّية. اذكر دائمًا في ورقتك "
+                "البرنامج والخوارزمية ومستوى الدلالة.")
+with ui.box("tip", "ملف تعليمي كامل"):
+    st.markdown("مع المكتبة ملف `indsat_guide.do`: دليل من الصفر ببيانات حقيقية (النيل، حزام الأمان، الاستهلاك البريطاني)، "
+                "يشرح كل متغير بالعربية والإنجليزية ويطبق التشبع قبل التقدير وبعده، مع جداول Excel ورسوم.")
 ui.nav_hint("قاموس المصطلحات")

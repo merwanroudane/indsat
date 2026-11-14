@@ -11,7 +11,7 @@ showWidgetBorder = true
 showSidebarBorder = true
 font = "'IBM Plex Sans Arabic':https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
 headingFont = "'IBM Plex Sans Arabic':https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@600;700&display=swap"
-baseFontSize = 16
+baseFontSize = 17
 headingFontWeights = [700, 700, 600, 600, 600, 600]
 blueColor = "#1c7ed6"
 greenColor = "#2f9e44"

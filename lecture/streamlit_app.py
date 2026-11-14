@@ -11,6 +11,8 @@ P = "app_pages/"
 pages = {
     "البداية": [
         st.Page(P + "home.py", title="مرحبًا: خريطة المحاضرة", icon=":material/home:", default=True),
+        st.Page(P + "start_here.py", title="ابدأ من هنا: طريق المبتدئ", icon=":material/flag:"),
+        st.Page(P + "basics.py", title="أساسيات لا بد منها", icon=":material/school:"),
         st.Page(P + "history.py", title="تاريخ المنهجية", icon=":material/history:"),
         st.Page(P + "why.py", title="لماذا نحتاجها؟", icon=":material/help:"),
     ],
@@ -38,6 +40,7 @@ pages = {
         st.Page(P + "regression.py", title="التشبع في الانحدار وARDL", icon=":material/multiline_chart:"),
     ],
     "التطبيق والمراجعة": [
+        st.Page(P + "workflow.py", title="من البيانات إلى الورقة", icon=":material/description:"),
         st.Page(P + "lab.py", title="المختبر: جرّب بنفسك", icon=":material/science:"),
         st.Page(P + "compare.py", title="مقارنة مع الطرق الأخرى", icon=":material/difference:"),
         st.Page(P + "guide.py", title="دليل اختيار النوع", icon=":material/route:"),

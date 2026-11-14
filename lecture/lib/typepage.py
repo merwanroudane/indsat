@@ -1,4 +1,10 @@
-"""Template used by every 'type of saturation' lesson."""
+"""Template used by every 'type of saturation' lesson.
+
+Each lesson follows the same beginner-friendly order: banner and objectives, the idea in
+plain words, an everyday analogy, the formula, what it detects and when to use it, a worked
+example with real numbers, an interactive demo, how to read the output, common mistakes,
+code, self-check questions and a summary.
+"""
 from __future__ import annotations
 
 from typing import Callable
@@ -12,30 +18,45 @@ from . import figs, sim, ui
 def render(code: str, ar: str, en: str, color: str, formula: str, intro: str,
            detects: list[str], use_when: list[str], cautions: list[str], examples: list[str],
            demo: Callable[[float, int, int], tuple] | None, demo_label: str, sizes: tuple[float, float, float],
-           stata: str, r_code: str | None = None, next_page: str = "") -> None:
-    ui.header(f"{code}: {ar}", en, intro, color)
-    st.markdown("### :material/functions: التعريف")
-    st.latex(formula)
+           stata: str, r_code: str | None = None, next_page: str = "", *,
+           num: str = "", objectives: list[str] | None = None, minutes: int | None = None,
+           idea: str = "", analogy: tuple[str, str] | None = None, formula_note: str = "",
+           worked: tuple[str, str] | None = None, reading: list[tuple[str, str]] | None = None,
+           mistakes: list[str] | None = None, checks: list[tuple[str, list[str], int, str]] | None = None,
+           summary: list[str] | None = None, extra: Callable[[], None] | None = None) -> None:
+    ui.hero(num or "أنواع التشبع", f"{code}: {ar}", en, intro, color)
+    if objectives:
+        ui.objectives(objectives, minutes)
 
+    if idea:
+        st.markdown("## 💬 الفكرة ببساطة")
+        st.markdown(idea)
+    if analogy:
+        with ui.box("analogy", analogy[0]):
+            st.markdown(analogy[1])
+
+    with ui.box("formula", "التعريف الرياضي"):
+        st.latex(formula)
+        if formula_note:
+            st.markdown(formula_note)
+
+    st.markdown("## 🔍 ماذا يكشف؟ ومتى نستخدمه؟")
     c1, c2 = st.columns(2)
     with c1:
-        with st.container(border=True):
-            st.markdown(f"#### :{color}[ماذا يكشف؟]")
+        with ui.box("def", "ماذا يكشف؟"):
             st.markdown("\n".join(f"- {d}" for d in detects))
-        with st.container(border=True):
-            st.markdown("#### :orange[تنبيهات]")
-            st.markdown("\n".join(f"- {d}" for d in cautions))
     with c2:
-        with st.container(border=True):
-            st.markdown("#### :green[متى نستخدمه؟]")
+        with ui.box("tip", "متى نستخدمه؟"):
             st.markdown("\n".join(f"- {d}" for d in use_when))
-        with st.container(border=True):
-            st.markdown("#### :blue[أمثلة من الواقع والأبحاث]")
-            st.markdown("\n".join(f"- {d}" for d in examples))
+    with ui.box("story", "أمثلة من الواقع والأبحاث"):
+        st.markdown("\n".join(f"- {d}" for d in examples))
+    if worked:
+        with ui.box("example", worked[0]):
+            st.markdown(worked[1])
 
     if demo is not None:
-        st.markdown("### :material/play_circle: العرض التفاعلي")
-        st.markdown(demo_label + " اضغط ▶ لمشاهدة البحث كتلةً كتلة، ثم اقرأ النتيجة النهائية أسفله.")
+        st.markdown("## ▶️ العرض التفاعلي")
+        st.markdown(demo_label + " حرّك الأشرطة، ثم اضغط ▶ لمشاهدة البحث كتلةً كتلة، وانتقل إلى «النتيجة النهائية».")
         with st.container(border=True):
             a, b, c = st.columns(3)
             size = a.slider("حجم الحدث", sizes[0], sizes[1], sizes[2], 0.25, key=f"{code}_size")
@@ -50,15 +71,32 @@ def render(code: str, ar: str, en: str, color: str, formula: str, intro: str,
             st.plotly_chart(figs.result_figure(t, y, res, truth, "البيانات، الحقيقة، والنموذج المشبَّع"),
                             key=f"{code}_res_{size}_{alpha}_{seed}")
         kinds = res.__dict__["_all_kinds"]
-        found = ", ".join(f"{kinds[j]} عند t={tau}" for j, tau in zip(res.selected, res.taus)) or "لا شيء"
-        st.markdown(f"**المؤشرات المحتفظ بها:** {found}  \n**الحقيقة:** {note}")
+        found = "، ".join(f"{kinds[j]} عند t={tau}" for j, tau in zip(res.selected, res.taus)) or "لا شيء"
+        with ui.box("think", "قارن ما وجدته الخوارزمية بالحقيقة"):
+            st.markdown(f"**المؤشرات المحتفظ بها:** {found}\n\n**الحقيقة التي صُممت بها البيانات:** {note}\n\n"
+                        "جرّب: صغّر حجم الحدث حتى يختفي، ثم غيّر α. متى تبدأ الخوارزمية في تفويته؟")
 
-    st.markdown("### :material/code: كيف أطبّقه؟")
+    if extra is not None:
+        extra()
+
+    if reading:
+        st.markdown("## 📖 كيف تقرأ النتائج؟")
+        ui.steps(reading, color)
+    if mistakes or cautions:
+        with ui.box("warn", "أخطاء شائعة وتنبيهات"):
+            st.markdown("\n".join(f"- {d}" for d in (mistakes or []) + cautions))
+
+    st.markdown("## 💻 كيف أطبّقه؟")
     t1, t2 = st.tabs(["Stata (indsat)", "R (gets)"])
     with t1:
         st.code(stata, language="stata")
     with t2:
         st.code(r_code or "# غير متاح مباشرة في gets؛ استخدم uis = مصفوفة المؤشرات", language="r")
+
+    for i, (q, opts, ans, expl) in enumerate(checks or []):
+        ui.check(q, opts, ans, expl, key=f"{code}_q{i}")
+    if summary:
+        ui.summary(summary)
     if next_page:
         ui.nav_hint(next_page)
 

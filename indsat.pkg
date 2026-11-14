@@ -41,6 +41,7 @@ f indsat_loop.sthlp
 f indsat_gauge.sthlp
 f indsat_sim.sthlp
 f indsat_example.do
+f indsat_guide.do
 f indsat_validate.do
 f indsat_validate.R
 f indsat_nile.dta
