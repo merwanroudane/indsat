@@ -8,6 +8,9 @@ clear
 set more off
 capture log close
 log using indsat_example.log, replace text
+* Use the library files in indsat_package next to this do-file, if present.
+capture confirm file "indsat_package/indsat.ado"
+if !_rc adopath ++ "`c(pwd)'/indsat_package"
 
 * ---------------------------------------------------------------------
 * 0. Theory before data: how many false indicators to expect?

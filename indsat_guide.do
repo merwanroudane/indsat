@@ -47,6 +47,11 @@ log using "`out'/indsat_guide.log", replace text
 * البيانات ملفات Stata بصيغة dta وليست Excel ولا داخل هذا الملف. ضع الملفات الثلاثة في مجلد العمل
 * أو دع الأوامر التالية تنزّلها من GitHub. بيانات أمد الحياة مدمجة في Stata.
 local gh "https://raw.githubusercontent.com/merwanroudane/indsat/main/"
+* If the library files sit in the folder indsat_package next to this do-file,
+* use them directly (no internet needed).
+* إذا كانت ملفات المكتبة في المجلد indsat_package بجانب هذا الملف فستُستخدم مباشرة دون إنترنت
+capture confirm file "indsat_package/indsat.ado"
+if !_rc adopath ++ "`c(pwd)'/indsat_package"
 capture which indsat
 if _rc {
     net install indsat, from("`gh'") replace
